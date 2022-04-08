@@ -1,0 +1,51 @@
+#include<iostream>
+using namespace std;
+int i,j,m,k,n,p,visited[10],vector[10],nodes,a;
+int costmatrix[10][10]={{0,5,99,99,1},{5,0,2,99,99},{99,2,0,3,99},{99,99,3,0,4},{1,99,99,4,0}};//costmatrix
+void minimum_value();//computes minimum value in vector excluding the visited ones
+void updated_vector();//updates the vector with least cost
+int main()
+{
+   cout<<"\nEnter the number of nodes = ";//takes the input from the user
+    cin>>nodes;
+    for(i=0;i<nodes;i++)
+    {
+        for(j=0;j<nodes;j++)
+        {
+        vector[j]=costmatrix[i][j];//read all the distances from one nodes
+        visited[j]=0;//mark all the nodes as zero indicating not visited
+        cout<<vector[j]<<"   ";
+        }
+        cout<<"\n";
+        for(j=0;j<nodes;j++)
+        {
+            minimum_value();//computes minimum value in the vector and updates the value which is not visited
+            updated_vector();//updates the new minimum value 
+        }
+       cout<<"FOR node "<<i<<"\n";
+        for(p=0;p<nodes;p++)
+            cout<<p<<"      "<<vector[p]<<"  "<<"\n";
+            cout<<"\n";
+         }
+return 0;
+}
+void minimum_value()
+{
+     a=99;
+    for(p=0;p<nodes;p++)
+        if(a>vector[p] && visited[p]==0)//exceutes only when a node distance is small than previous distance and when not visted
+          {  m=p;
+            a=vector[p];
+           // cout<<m<<"  "<<a<<" "<<"\n";
+          }
+     visited[m]=1;
+}
+
+void updated_vector()
+{
+    for(p=0;p<nodes;p++)
+    {
+        if((costmatrix[m][p]+vector[m]) < vector[p])
+        vector[p]=costmatrix[m][p]+vector[m];
+    }
+}
